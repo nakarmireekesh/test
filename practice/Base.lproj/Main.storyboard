@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7FF-g3-F2n">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="PXf-Mn-qm0">
+            <objects>
+                <pageViewController storyboardIdentifier="ViewController" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="7FF-g3-F2n" customClass="ViewController" customModule="practice" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="u3U-32-WUP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5" y="25"/>
+        </scene>
+        <!--Questions View Controller-->
+        <scene sceneID="GhC-C8-vT5">
+            <objects>
+                <viewController storyboardIdentifier="QuestionsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="1hr-j7-7WH" customClass="QuestionsViewController" customModule="practice" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="74N-WX-hNd">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNI-UW-hzq">
+                                <rect key="frame" x="20" y="109" width="353" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Qra-uF-EBt">
+                                <rect key="frame" x="20" y="153" width="353" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="750" constant="50" id="XeI-Qj-1cY"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yxV-sr-wGs">
+                                <rect key="frame" x="273" y="748" width="100" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="eXB-nc-RR2"/>
+                                    <constraint firstAttribute="height" constant="50" id="npF-rn-SmC"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Next" titleAlignment="center"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonTapped:" destination="1hr-j7-7WH" eventType="touchUpInside" id="tP8-jN-oJn"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiY-iv-05K">
+                                <rect key="frame" x="20" y="748" width="100" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="LeK-Sz-cA3"/>
+                                    <constraint firstAttribute="width" constant="100" id="T8C-W7-H70"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Back" titleAlignment="center"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="15"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="1hr-j7-7WH" eventType="touchUpInside" id="eKn-nB-bu6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BvW-tA-JzF"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="BvW-tA-JzF" firstAttribute="trailing" secondItem="yxV-sr-wGs" secondAttribute="trailing" constant="20" id="5dP-aB-WJ6"/>
+                            <constraint firstItem="BvW-tA-JzF" firstAttribute="trailing" secondItem="ZNI-UW-hzq" secondAttribute="trailing" constant="20" id="93S-Xs-wz2"/>
+                            <constraint firstItem="Qra-uF-EBt" firstAttribute="leading" secondItem="ZNI-UW-hzq" secondAttribute="leading" id="AYB-TP-DXW"/>
+                            <constraint firstItem="ZNI-UW-hzq" firstAttribute="top" secondItem="BvW-tA-JzF" secondAttribute="top" constant="50" id="Cz5-Np-g07"/>
+                            <constraint firstItem="QiY-iv-05K" firstAttribute="leading" secondItem="BvW-tA-JzF" secondAttribute="leading" constant="20" id="hF5-cN-bCW"/>
+                            <constraint firstItem="Qra-uF-EBt" firstAttribute="trailing" secondItem="ZNI-UW-hzq" secondAttribute="trailing" id="iob-nE-ir3"/>
+                            <constraint firstItem="QiY-iv-05K" firstAttribute="centerY" secondItem="yxV-sr-wGs" secondAttribute="centerY" id="j83-ak-4he"/>
+                            <constraint firstItem="BvW-tA-JzF" firstAttribute="bottom" secondItem="QiY-iv-05K" secondAttribute="bottom" constant="20" id="rtV-cP-9cA"/>
+                            <constraint firstItem="ZNI-UW-hzq" firstAttribute="leading" secondItem="BvW-tA-JzF" secondAttribute="leading" constant="20" id="wEi-Fl-aRB"/>
+                            <constraint firstItem="BvW-tA-JzF" firstAttribute="bottom" secondItem="yxV-sr-wGs" secondAttribute="bottom" constant="20" id="wqI-5e-Kex"/>
+                            <constraint firstItem="Qra-uF-EBt" firstAttribute="top" secondItem="ZNI-UW-hzq" secondAttribute="bottom" constant="20" id="ydm-vK-5oT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backButton" destination="QiY-iv-05K" id="Ll4-LI-sYh"/>
+                        <outlet property="nextButton" destination="yxV-sr-wGs" id="voo-0i-OKx"/>
+                        <outlet property="optionsStackView" destination="Qra-uF-EBt" id="lV0-gV-M4v"/>
+                        <outlet property="questionsLabel" destination="ZNI-UW-hzq" id="J9D-q7-dVP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7qR-fC-C0Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="906" y="25"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

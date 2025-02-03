@@ -1,0 +1,61 @@
+{
+  "data": [
+    {
+    "question" : "Do you have a preferred wake up time?",
+      "options" : [
+        "Before 6 AM",
+        "6 AM - 8 AM",
+        "8 AM - 10 AM",
+        "I don’t have a specific timing"
+      ],
+      "isMultiSelect": false
+    },
+    {
+    "question" : "How about bed time?",
+      "options" : [
+        "6 PM - 8 PM",
+        "8 PM - 10 PM",
+        "10 PM - 12 AM",
+        "After 12 AM",
+        "I don’t have a specific timing"
+      ],
+      "isMultiSelect": false
+    },
+    {
+    "question" : "What’s your age group Zach?",
+      "options" : [
+        "Under 18",
+        "18 - 25",
+        "26 - 35",
+        "36 - 45",
+        "46 - 55",
+        "56 - 65",
+        "Above 65"
+      ],
+      "isMultiSelect": false
+    },
+    {
+    "question" : "What’s your sleep goal?",
+      "options" : [
+        "Fall Asleep Faster,",
+        "Wake Up Refreshed",
+        "Sleep Deeper & Stay Asleep"
+      ],
+      "isMultiSelect": false
+    },
+    {
+    "question" : "Which sounds help you relax? ",
+      "options" : [
+        "Nature Sounds",
+        "Forest Sounds",
+        "River Sounds",
+        "Animal Sounds",
+        "Cafe Sounds",
+        "Ambient Music",
+        "Sleep Stories",
+        "Pure Tone"
+      ],
+      "isMultiSelect": true
+    }
+  ]
+}
