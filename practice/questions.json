@@ -6,7 +6,7 @@
         "Before 6 AM",
         "6 AM - 8 AM",
         "8 AM - 10 AM",
-        "I don’t have a specific timing"
+        "I don’t have a specific timing. I don’t have a specific timing. I don’t have a specific timing"
       ],
       "isMultiSelect": false
     },
@@ -53,7 +53,7 @@
         "Cafe Sounds",
         "Ambient Music",
         "Sleep Stories",
-        "Pure Tone"
+        "Pure Tone",
       ],
       "isMultiSelect": true
     }

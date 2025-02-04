@@ -18,6 +18,11 @@ class ViewController: UIPageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        setupUI()
+    }
+    
+    // MARK: - Public
+    func setupUI() {
         self.delegate = self
         self.dataSource = self
         
@@ -29,9 +34,10 @@ class ViewController: UIPageViewController {
                 setViewControllers([firstQuestionVC], direction: .forward, animated: true, completion: nil)
             }
         }
+        
+        disableSwipe()
     }
     
-    // MARK: - Public
     func createQuestionViewController(at index: Int) -> QuestionsViewController? {
         guard index >= 0 && index < questions.count else { return nil }
         
@@ -40,6 +46,7 @@ class ViewController: UIPageViewController {
             questionVC.question = questions[index]
             questionVC.isLastQuestion = (index == questions.count - 1)
             questionVC.currentQuestionIndex = index
+            questionVC.selectedAnswers = userAnswers[index]
             questionVC.onAnswerSelected = { [weak self] answers in
                 self?.userAnswers[index] = answers
             }
@@ -48,11 +55,20 @@ class ViewController: UIPageViewController {
         return nil
     }
     
+    func disableSwipe() {
+        for view in view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.isScrollEnabled = false
+            }
+        }
+    }
+    
     func goToNextQuestion() {
         currentIndex += 1
         if currentIndex < questions.count {
             if let nextQuestionVC = createQuestionViewController(at: currentIndex) {
                 setViewControllers([nextQuestionVC], direction: .forward, animated: true, completion: nil)
+                nextQuestionVC.updateProgress()
             }
         } else {
             showResults()
@@ -64,6 +80,7 @@ class ViewController: UIPageViewController {
         if currentIndex >= 0 {
             if let previousQuestionVC = createQuestionViewController(at: currentIndex) {
                 setViewControllers([previousQuestionVC], direction: .reverse, animated: true, completion: nil)
+                previousQuestionVC.updateProgress()
             }
         }
     }
@@ -78,11 +95,13 @@ class ViewController: UIPageViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alert, animated: true, completion: nil)
     }
+
 }
 
 // MARK: - Extensions
 extension ViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        
         guard let currentVC = viewController as? QuestionsViewController,
               let currentIndex = questions.firstIndex(where: {
                   $0.question == currentVC.question.question
@@ -100,6 +119,7 @@ extension ViewController: UIPageViewControllerDelegate, UIPageViewControllerData
         
         let nextIndex = currentIndex + 1
         return createQuestionViewController(at: nextIndex)
+    
     }
 }
 

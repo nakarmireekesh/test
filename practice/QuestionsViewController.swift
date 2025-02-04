@@ -11,9 +11,10 @@ class QuestionsViewController: UIViewController {
     
     // MARK: - Properties
     @IBOutlet weak var questionsLabel: UILabel!
-    @IBOutlet weak var optionsStackView: UIStackView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var optionsTableView: UITableView!
+    @IBOutlet weak var indicatorBar: UIProgressView!
     
     var question: Questions!
     var selectedAnswers: [String] = []
@@ -34,69 +35,26 @@ class QuestionsViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         setupUI()
-        updateButtonState()
     }
     
     // MARK: - Public
     func setupUI() {
         questionsLabel.text = question.question
-        
-        // Clearing previous options
-        optionsStackView.arrangedSubviews.forEach {
-            $0.removeFromSuperview()
-        }
+        optionsTableView.delegate = self
+        optionsTableView.dataSource = self
         
         // Fetch stored answers
         if let pageVC = parent as? ViewController {
             selectedAnswers = pageVC.userAnswers[currentQuestionIndex]
         }
-        
-        for option in question.options {
-            let button = UIButton(type: .system)
-            button.setTitle(option, for: .normal)
-            button.addTarget(self, action: #selector(optionSelected(_:)), for: .touchUpInside)
-            button.layer.cornerRadius = 8
-            button.layer.borderWidth = 1
-            button.layer.borderColor = UIColor.systemBlue.cgColor
-            button.setTitleColor(.systemBlue, for: .normal)
-            button.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-            button.heightAnchor.constraint(equalToConstant: 50).isActive = true
-            
-            if selectedAnswers.contains(option) {
-                button.backgroundColor = .systemBlue
-                button.setTitleColor(.white, for: .normal)
-            }
-            
-            optionsStackView.addArrangedSubview(button)
-        }
+        updateProgress()
+        updateButtonState()
     }
     
-    // Option Selection
-    @objc func optionSelected(_ sender: UIButton) {
-        guard let selectedAnswer = sender.titleLabel?.text else { return }
-        
-        if question.isMultiSelect {
-            if selectedAnswers.contains(selectedAnswer) {
-                selectedAnswers.removeAll { $0 == selectedAnswer }
-                sender.backgroundColor = .clear
-                sender.setTitleColor(.systemBlue, for: .normal)
-            } else {
-                selectedAnswers.append(selectedAnswer)
-                sender.backgroundColor = .systemBlue
-                sender.setTitleColor(.white, for: .normal)
-                
-            }
-        } else {
-            selectedAnswers = [selectedAnswer]
-            optionsStackView.arrangedSubviews.forEach { view in
-                if let button = view as? UIButton {
-                    button.backgroundColor = (button == sender) ? .systemBlue : .clear
-                    button.setTitleColor((button == sender) ? .white : .systemBlue, for: .normal)
-                }
-            }
-        }
-        
-        onAnswerSelected?(selectedAnswers)
+    func updateProgress() {
+        let totalQuestions = (parent as? ViewController)?.questions.count ?? 1
+        let progress = Float(currentQuestionIndex + 1) / Float(totalQuestions)
+        indicatorBar.setProgress(progress, animated: true)
     }
     
     func updateButtonState() {
@@ -104,9 +62,11 @@ class QuestionsViewController: UIViewController {
         backButton.isHidden = (currentQuestionIndex == 0)
         nextButton.setTitle(isLastQuestion ? "Submit" : "Next", for: .normal)
         
+        self.nextButton.isEnabled = !self.selectedAnswers.isEmpty
+        self.nextButton.alpha = self.selectedAnswers.isEmpty ? 1.0 : 1.0
     }
     
-    
+    // MARK: - IBActions
     @IBAction func nextButtonTapped(_ sender: Any) {
         if let pageVC = parent as? ViewController {
             if isLastQuestion {
@@ -117,10 +77,57 @@ class QuestionsViewController: UIViewController {
         }
     }
     
-    
     @IBAction func backButtonTapped(_ sender: Any) {
         if let pageVC = parent as? ViewController {
             pageVC.goToPreviousQuestion()
         }
+    }
+    
+}
+
+// MARK: - Extension
+extension QuestionsViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return question.options.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = optionsTableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! OptionsTableViewCell
+        let option = question.options[indexPath.row]
+        
+        cell.optionsTextLabel.text = option
+        
+        if selectedAnswers.contains(option) {
+            cell.backgroundColor = .systemBlue
+            cell.optionsTextLabel.textColor = .white
+        } else {
+            cell.backgroundColor = .clear
+            cell.optionsTextLabel.textColor = .systemBlue
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedOption = question.options[indexPath.row]
+        
+        if question.isMultiSelect {
+            if selectedAnswers.contains(selectedOption) {
+                selectedAnswers.removeAll { $0 == selectedOption }
+            } else {
+                selectedAnswers.append(selectedOption)
+            }
+        } else {
+            selectedAnswers = [selectedOption]
+        }
+        
+        onAnswerSelected?(selectedAnswers)
+        updateButtonState()
+        tableView.reloadData()
+        
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }

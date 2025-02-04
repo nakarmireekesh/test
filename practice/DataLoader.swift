@@ -15,7 +15,7 @@ struct DataLoader {
                 let questionsData = try JSONDecoder().decode(QuestionsData.self, from: data)
                 return questionsData.data
             } catch {
-                print("Error loading quiz data: \(error)")
+                print("Error loading data: \(error)")
             }
         }
         return nil
